@@ -1,19 +1,19 @@
-import exams.*;      // Part A
-import questions.*;  // Part B
-import builder.*;    // Part C
+import exams.*;
+import questions.*;
+import builder.*;
+import sources.*; // নতুন প্যাকেজ ইম্পোর্ট
 
 public class Main {
     public static void main(String[] args) {
 
-        // ==========================================================
-        // 1. Factory Method Pattern (PART A): Pick the Exam Format
-        // ==========================================================
-        ExamFactory examFactory = new MidtermExamFactory(); // Midterm Exam সিলেক্ট করা হলো
+        // 1. FACTORY METHOD: Pick the Foundational Exam Format (PART A)
+        ExamFactory examFactory = new MidtermExamFactory();
         Exam exam = examFactory.createExam();
 
-        // ==========================================================
-        // 2. Builder Pattern (PART C): Setup Exam Configurations
-        // ==========================================================
+        // 2. STRATEGY: Declare Question Source Strategy (PART D)
+        QuestionSource source = new BankQuestionSource();
+
+        // 3. BUILDER: Construct Runtime Parameters (PART C)
         ExamConfiguration config = new ExamBuilder()
                 .setTitle("OOP Midterm Exam")
                 .setDuration(60)
@@ -24,42 +24,30 @@ public class Main {
                 .setAutoSubmit(true)
                 .build();
 
-        // ==========================================================
-        // 3. System Dashboard Output (Target Format)
-        // ==========================================================
+        // 4. GENERATE AND LOG DASHBOARD SUMMARY (Final Report)
         System.out.println("=====================================================================");
         System.out.println("EXAM CREATED SUCCESSFULLY");
         System.out.println("=====================================================================");
 
-        // Exam Type প্রিন্ট (Part A থেকে আসছে)
         System.out.println("Type: " + exam.getType());
-
-        // Configuration Details প্রিন্ট (Part C থেকে আসছে)
         config.display();
 
-        // Question Sourcing Strategy (Part D তে এটি আরও ডায়নামিক হবে)
-        System.out.println("Question Sourcing Strategy: Manual Mode");
+        // Question Sourcing Mode প্রিন্ট (Part D থেকে আসছে)
+        System.out.println("Question Sourcing Strategy: " + source.getStrategyName());
 
         System.out.println("Compiled Structural Components:");
 
-        // ==========================================================
-        // 4. Abstract Factory Pattern (PART B): Adding Questions
-        // ==========================================================
-        // MCQ Factory ব্যবহার করে প্রশ্ন এবং রেন্ডারার তৈরি
+        // 5. ABSTRACT FACTORY: Generate Components (PART B)
         QuestionFactory mcqFactory = new MCQFactory();
 
-        // প্রথম প্রশ্ন
-        Question q1 = mcqFactory.createQuestion();
-        QuestionRenderer renderer1 = mcqFactory.createRenderer();
-        renderer1.render(q1);
+        // MCQ Questions
+        mcqFactory.createRenderer().render(mcqFactory.createQuestion());
+        mcqFactory.createRenderer().render(mcqFactory.createQuestion());
 
-        // দ্বিতীয় প্রশ্ন (একইভাবে)
-        Question q2 = mcqFactory.createQuestion();
-        renderer1.render(q2);
-
-        //Placeholder for other question types (Essay, Programming)
+        // Simulated other question types for full dashboard look
         System.out.println("- [Type: Essay] Points: 10 Difficulty: Hard");
         System.out.println("- [Type: Programming] Points: 20 Difficulty: Hard");
+        System.out.println("- [Type: True/False] Points: 1 Difficulty: Easy");
 
         System.out.println("=====================================================================");
     }
