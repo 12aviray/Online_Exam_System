@@ -9,15 +9,15 @@ public class ExamConfiguration {
     public boolean autoSubmit;
     public boolean calculatorAllowed;
 
-    // print the configuration(dashboard)
-    public void display() {
-        System.out.println("Title: " + title);
-        System.out.println("Duration: " + duration + " minutes");
-        System.out.println("Passing Score: " + passingScore + " Marks");
-        System.out.println("Configuration Profiles:");
-        System.out.println((negativeMarking ? "✓" : "✗") + " Negative Marking Enabled");
-        System.out.println((questionShuffle ? "✓" : "✗") + " Question Shuffle Activated");
-        System.out.println((calculatorAllowed ? "✓" : "✗") + " Embedded Calculator Allowed");
-        System.out.println((autoSubmit ? "✓" : "✗") + " Auto-Submit On Timeout");
+    @Override
+    public String toString() {
+        return "Title: " + title + "\n" +
+                "Duration: " + duration + " minutes\n" +
+                "Passing Score: " + passingScore + " Marks\n" +
+                "Configuration Profiles:\n" +
+                (negativeMarking ? " ✓" : " ✗") + " Negative Marking Enabled\n" +
+                (questionShuffle ? " ✓" : " Question Shuffle Activated\n") +
+                (calculatorAllowed ? " ✓" : " ✗") + " Embedded Calculator Allowed\n" +
+                (autoSubmit ? " ✓" : " ✗") + " Auto-Submit On Timeout";
     }
 }
