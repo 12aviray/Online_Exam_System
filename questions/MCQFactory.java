@@ -1,17 +1,29 @@
 package questions;
-
-class MCQ implements Question { public String getType() { return "MCQ"; } }
-
-class MCQRenderer implements QuestionRenderer {
-    public void render(Question q) { System.out.println("- [Type: " + q.getType() + "] Points: 2 Difficulty: Medium"); }
-}
-
-class MCQEvaluator implements QuestionEvaluator {
-    public int evaluate(Question q, String answer) { return 2; }
-}
+import sources.QuestionSource;
 
 public class MCQFactory implements QuestionFactory {
-    public Question createQuestion() { return new MCQ(); }
-    public QuestionRenderer createRenderer() { return new MCQRenderer(); }
-    public QuestionEvaluator createEvaluator() { return new MCQEvaluator(); }
+    private QuestionSource source;
+
+    public MCQFactory(QuestionSource source) {
+        this.source = source;
+    }
+
+    @Override
+    public Question createQuestion() {
+        String text = source.getQuestionData("MCQ");
+        return new Question() {
+            @Override public String getType() { return "MCQ"; }
+            @Override public String getText() { return text; }
+        };
+    }
+
+    @Override
+    public QuestionRenderer createRenderer() {
+        return q -> System.out.println("[Rendering MCQ] " + q.getText());
+    }
+
+    @Override
+    public QuestionEvaluator createEvaluator() {
+        return (q, answer) -> answer.equalsIgnoreCase("A") ? 2 : 0; // MCQ points: 2
+    }
 }

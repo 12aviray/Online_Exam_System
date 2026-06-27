@@ -1,5 +1,5 @@
 package sources;
 
 public interface QuestionSource {
-    String getStrategyName();
+    String getQuestionData(String type);
 }
